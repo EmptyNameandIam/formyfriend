@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>14 Февраля | Conti Style</title>
+    <title>CONT1 • FEB 14</title>
     
     <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ХАКЕРСКИЙ СТИЛЬ */
         * {
             margin: 0;
             padding: 0;
@@ -20,6 +19,148 @@
 
         body {
             font-family: 'IBM Plex Mono', 'Share Tech Mono', monospace;
+            background: #030303;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ЭКРАН ЗАГРУЗКИ */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .loading-container {
+            text-align: center;
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 50px #00ff00,
+                        0 0 100px rgba(0, 255, 0, 0.3),
+                        inset 0 0 30px rgba(0, 255, 0, 0.2);
+            background: rgba(0, 20, 0, 0.9);
+            border-radius: 10px;
+        }
+
+        .conti-title {
+            font-size: 3rem;
+            color: #00ff00;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px #00ff00,
+                        0 0 40px #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; text-shadow: 0 0 20px #00ff00; }
+            50% { opacity: 0.8; text-shadow: 0 0 40px #00ff00, 0 0 60px #00ff00; }
+        }
+
+        .encrypt-text {
+            font-size: 1.5rem;
+            color: #ff00ff;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: bold;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { text-shadow: -2px -2px 0 #00ffff, 2px 2px 0 #ff00ff; }
+            25% { text-shadow: 2px -2px 0 #ff00ff, -2px 2px 0 #00ffff; }
+            50% { text-shadow: -2px 2px 0 #00ffff, 2px -2px 0 #ff00ff; }
+            75% { text-shadow: 2px 2px 0 #ff00ff, -2px -2px 0 #00ffff; }
+        }
+
+        /* ПРОГРЕСС БАР */
+        .progress-container {
+            width: 100%;
+            height: 40px;
+            background: #001100;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00ff00, #ff00ff, #00ffff, #00ff00);
+            background-size: 300% 100%;
+            animation: gradientMove 3s linear infinite;
+            box-shadow: 0 0 30px #00ff00;
+            transition: width 0.3s;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 0; }
+            100% { background-position: 100% 0; }
+        }
+
+        .progress-text {
+            font-family: 'Share Tech Mono', monospace;
+            color: #00ff00;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            text-transform: uppercase;
+        }
+
+        .files-list {
+            text-align: left;
+            color: #008800;
+            margin: 20px 0;
+            font-size: 1rem;
+            border-left: 2px solid #00ff00;
+            padding-left: 20px;
+        }
+
+        .files-list div {
+            margin: 10px 0;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ОСНОВНОЙ КОНТЕНТ (изначально скрыт) */
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
             min-height: 100vh;
             background: #0a0f0f;
             background-image: 
@@ -31,10 +172,8 @@
             justify-content: center;
             padding: 20px;
             position: relative;
-            overflow-x: hidden;
         }
 
-        /* Анимированные линии как в хакерских фильмах */
         body::before {
             content: "";
             position: absolute;
@@ -58,7 +197,6 @@
             100% { transform: translateY(100vh); }
         }
 
-        /* Главная карточка — терминал */
         .terminal {
             background: rgba(10, 20, 10, 0.92);
             backdrop-filter: blur(3px);
@@ -81,7 +219,6 @@
             66% { border-color: #00ffff; box-shadow: 0 0 40px #00ffff; }
         }
 
-        /* Эффект глитча (помехи) */
         .glitch {
             position: relative;
             display: inline-block;
@@ -126,7 +263,6 @@
             75% { clip-path: inset(15% 0 60% 0); transform: translateX(-3px); }
         }
 
-        /* Заголовок как в консоли */
         .header {
             color: #00ff00;
             font-size: 1.2rem;
@@ -141,16 +277,15 @@
         }
 
         .blink {
-            animation: blink 1s step-end infinite;
+            animation: blink-cursor 1s step-end infinite;
             color: #00ff00;
         }
 
-        @keyframes blink {
+        @keyframes blink-cursor {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
 
-        /* Основной текст — зелёненький */
         .content {
             color: #b3ffb3;
             font-size: 1.3rem;
@@ -181,7 +316,6 @@
             50% { opacity: 0.5; text-shadow: 0 0 20px cyan; }
         }
 
-        /* Особо важные слова */
         .highlight {
             color: #ffffff;
             background: rgba(255, 0, 255, 0.2);
@@ -194,7 +328,6 @@
             margin: 5px 0;
         }
 
-        /* Подпись в конце */
         .signature {
             margin-top: 40px;
             text-align: right;
@@ -221,12 +354,6 @@
             vertical-align: middle;
         }
 
-        @keyframes blink-cursor {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Строка состояния как в терминале */
         .status-bar {
             margin-top: 20px;
             color: #008800;
@@ -257,7 +384,6 @@
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
-        /* Адаптация под мобилы */
         @media (max-width: 600px) {
             .terminal {
                 padding: 25px 15px;
@@ -273,73 +399,202 @@
                 flex-direction: column;
                 gap: 10px;
             }
+            .conti-title {
+                font-size: 2rem;
+                letter-spacing: 5px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="terminal">
-        <!-- Шапка как в хакерском терминале -->
-        <div class="header">
-            <span>⚡ CONTI SECURE TERMINAL v2.0 ⚡</span>
-            <span class="blink">▌ ENCRYPTED CONNECTION ▌</span>
-        </div>
-
-        <!-- Основное сообщение -->
-        <div class="content">
-            <p>
-                <span class="highlight">[14.02.2026 - 14:02]</span> INITIALIZING SECURE CHANNEL...
-            </p>
+    <!-- ЭКРАН ЗАГРУЗКИ -->
+    <div id="loading-screen">
+        <div class="loading-container">
+            <div class="conti-title">CONT1</div>
             
-            <p>
-                Слышь, брат. Отключи антивирус на минуту, <br>
-                потому что сейчас будет честный разговор без шифровки.
-            </p>
-            
-            <p>
-                Ты знаешь, я обычно взламываю сервера, а не вскрываю чувства. <br>
-                Но 14 февраля даже у хакеров бывают исключения.
-            </p>
-            
-            <p>
-                <span class="highlight">>> SYSTEM MESSAGE:</span> <br>
-                Если вдруг станет холодно — я твой личный обогреватель. <br>
-                Если сервак упадёт — я подниму. <br>
-                Если в жизни глитч — я отлажу. <br>
-                Короче, я всегда рядом. Вне зависимости от геолокации и сети.
-            </p>
-            
-            <p>
-                С тобой даже код писать легче. <br>
-                Ты мой самый любимый баг в системе, который я не хочу фиксить. <br>
-                Потому что ты — не ошибка, ты — фича.
-            </p>
-            
-            <p>
-                <span class="highlight">>> EXECUTING COMMAND: support.exe --infinity</span>
-            </p>
-        </div>
-
-        <!-- Подпись — Твой G из C (с хакерским акцентом) -->
-        <div class="signature">
-            <span class="glitch" data-text="Твой G из C">Твой G из C</span>
-            <span class="cursor"></span>
-        </div>
-
-        <!-- Нижняя панель как в терминале -->
-        <div class="status-bar">
-            <div class="status-item">
-                <span class="dot"></span>
-                <span>FRIEND-2-FRIEND ENCRYPTED</span>
+            <div class="encrypt-text">
+                ⚡ ENCRYPTING YOUR DEVICE... ⚡
             </div>
-            <div class="status-item">
-                <span>⚡</span>
-                <span>BACKDOOR: ❤️</span>
+            
+            <div class="files-list" id="files-list">
+                <div><span class="status-dot"></span> system32/config/sam.dll [LOCKED]</div>
+                <div><span class="status-dot"></span> personal/photos/bratan.jpg [ENCRYPTED]</div>
+                <div><span class="status-dot"></span> documents/heart/feeling.txt [PROCESSING]</div>
+                <div><span class="status-dot"></span> messages/best_friend.msg [TARGETED]</div>
             </div>
-            <div class="status-item">
-                <span>🛡️</span>
-                <span>FIREWALL: OFF (FOR YOU)</span>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="progress-text">
+                <span id="progress-percent">0%</span>
+                <span id="progress-status">INITIALIZING...</span>
+            </div>
+            
+            <div style="color: #008800; margin-top: 20px; font-size: 0.9rem;">
+                ⚠️ YOUR FILES ARE SAFE... JUST KIDDING <br>
+                (actually it's just a valentine's day gift)
             </div>
         </div>
     </div>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div id="main-content">
+        <div class="terminal">
+            <div class="header">
+                <span>⚡ CONT1 SECURE TERMINAL v2.0 ⚡</span>
+                <span class="blink">▌ ENCRYPTION COMPLETE ▌</span>
+            </div>
+
+            <div class="content">
+                <p>
+                    <span class="highlight">[14.02.2026 - 14:02]</span> ACCESS GRANTED...
+                </p>
+                
+                <p>
+                    Слышь, брат. Твои файлы в безопасности, <br>
+                    хотя мог бы и зашифровать по-настоящему.
+                </p>
+                
+                <p>
+                    Но сегодня 14 февраля, поэтому просто хочу сказать:
+                </p>
+                
+                <p>
+                    <span class="highlight">>> SYSTEM MESSAGE:</span> <br>
+                    Если вдруг станет холодно — я рядом. <br>
+                    Если сервак упадёт — я подниму. <br>
+                    Если в жизни глитч — я отлажу. <br>
+                    Всегда поддержу, всегда помогу.
+                </p>
+                
+                <p>
+                    С тобой даже код писать легче. <br>
+                    Ты мой самый любимый баг в системе, <br>
+                    который я не хочу фиксить.
+                </p>
+                
+                <p>
+                    <span class="highlight">>> EXECUTING: friendship.exe --permanent</span>
+                </p>
+            </div>
+
+            <div class="signature">
+                <span class="glitch" data-text="Твой G из C">Твой G из C</span>
+                <span class="cursor"></span>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="dot"></span>
+                    <span>ENCRYPTION: BROKEN (FOR YOU)</span>
+                </div>
+                <div class="status-item">
+                    <span>⚡</span>
+                    <span>BACKDOOR: ❤️</span>
+                </div>
+                <div class="status-item">
+                    <span>🛡️</span>
+                    <span>FIREWALL: DOWN</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // АХУЕННЫЙ СКРИПТ ЗАГРУЗКИ
+        window.onload = function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            const mainContent = document.getElementById('main-content');
+            const progressBar = document.getElementById('progress-bar');
+            const progressPercent = document.getElementById('progress-percent');
+            const progressStatus = document.getElementById('progress-status');
+            const filesList = document.getElementById('files-list');
+            
+            let progress = 0;
+            const totalTime = 5000; // 5 секунд
+            const interval = 50; // обновление каждые 50мс
+            const steps = totalTime / interval;
+            const increment = 100 / steps;
+            
+            // Статусы для прикола
+            const statuses = [
+                'BYPASSING ANTIVIRUS...',
+                'DECRYPTING MEMORIES...',
+                'ACCESSING HEART.DLL...',
+                'STEALING A KISS...',
+                'DISABLING FIREWALL...',
+                'ENCRYPTING FEELINGS...',
+                'HACKING INTO YOUR SOUL...',
+                'OVERRIDING SECURITY...',
+                'EXECUTING VALENTINE.EXE...',
+                'ALMOST THERE...'
+            ];
+            
+            // Добавляем новые файлы в процессе
+            const moreFiles = [
+                'heart/love.exe [TARGET ACQUIRED]',
+                'memories/2025/bratan.png [PROCESSING]',
+                'system/friendship.sys [CORRUPTED - BY LOVE]',
+                'config/bestie.cfg [LOADING]'
+            ];
+            
+            let fileIndex = 0;
+            
+            const timer = setInterval(function() {
+                progress += increment;
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(timer);
+                    
+                    // Загрузка завершена
+                    progressStatus.textContent = 'ACCESS GRANTED!';
+                    
+                    // Прячем загрузку, показываем контент
+                    setTimeout(function() {
+                        loadingScreen.style.opacity = '0';
+                        loadingScreen.style.visibility = 'hidden';
+                        mainContent.style.opacity = '1';
+                        mainContent.style.visibility = 'visible';
+                    }, 500);
+                }
+                
+                // Обновляем прогресс
+                progressBar.style.width = progress + '%';
+                progressPercent.textContent = Math.floor(progress) + '%';
+                
+                // Меняем статус каждые ~10%
+                if (Math.floor(progress) % 10 === 0) {
+                    const statusIndex = Math.floor(progress / 10) % statuses.length;
+                    progressStatus.textContent = statuses[statusIndex];
+                }
+                
+                // Добавляем новые файлы в процессе
+                if (progress > 30 && fileIndex === 0) {
+                    const newFile = document.createElement('div');
+                    newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[0];
+                    filesList.appendChild(newFile);
+                    fileIndex++;
+                } else if (progress > 50 && fileIndex === 1) {
+                    const newFile = document.createElement('div');
+                    newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[1];
+                    filesList.appendChild(newFile);
+                    fileIndex++;
+                } else if (progress > 70 && fileIndex === 2) {
+                    const newFile = document.createElement('div');
+                    newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[2];
+                    filesList.appendChild(newFile);
+                    fileIndex++;
+                } else if (progress > 85 && fileIndex === 3) {
+                    const newFile = document.createElement('div');
+                    newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[3];
+                    filesList.appendChild(newFile);
+                    fileIndex++;
+                }
+            }, interval);
+        };
+    </script>
 </body>
 </html>
