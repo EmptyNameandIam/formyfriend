@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONT1 • LOCKBIT • MATRIX</title>
+    <title>CONT1 • LOCKBIT • CYBER CRIME</title>
     
     <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,9 +22,41 @@
             background: #030303;
             min-height: 100vh;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* МАТРИЧНЫЙ ДОЖДЬ НА ФОНЕ */
+        /* ВИДЕО НА ФОНЕ */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.4;
+            filter: grayscale(100%) contrast(150%) brightness(0.4);
+            pointer-events: none;
+        }
+
+        /* ТЁМНАЯ ПЛЁНКА ПОВЕРХ ВИДЕО */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 0, 0, 0.85) 0%,
+                rgba(0, 20, 0, 0.9) 50%,
+                rgba(0, 0, 0, 0.85) 100%
+            );
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* МАТРИЧНЫЙ ДОЖДЬ ПОВЕРХ ВИДЕО (для усиления) */
         canvas {
             position: fixed;
             top: 0;
@@ -168,14 +200,13 @@
             50% { opacity: 0; }
         }
 
-        /* ЭКРАН ВЫБОРА (после загрузки) */
+        /* ЭКРАН ВЫБОРА */
         #choice-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #030303;
             z-index: 100;
             display: none;
             justify-content: center;
@@ -193,10 +224,11 @@
             box-shadow: 0 0 70px #00ff00,
                         0 0 140px rgba(0, 255, 0, 0.3),
                         inset 0 0 50px rgba(0, 255, 0, 0.2);
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.85);
             border-radius: 20px;
             position: relative;
             z-index: 101;
+            backdrop-filter: blur(5px);
         }
 
         .matrix-quote {
@@ -242,6 +274,7 @@
             position: relative;
             overflow: hidden;
             background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
         }
 
         .pill::before {
@@ -331,7 +364,7 @@
             50% { opacity: 0.5; }
         }
 
-        /* СТРАНИЦА ПОЗДРАВЛЕНИЯ (после выбора) */
+        /* ОСНОВНОЙ КОНТЕНТ */
         #main-content {
             position: relative;
             z-index: 50;
@@ -340,41 +373,13 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: #0a0f0f;
-            background-image: 
-                linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
             opacity: 0;
             transition: opacity 1s ease;
         }
 
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 255, 0, 0.03) 0px,
-                rgba(0, 0, 0, 0.5) 1px,
-                transparent 2px
-            );
-            pointer-events: none;
-            animation: scan 8s linear infinite;
-            z-index: 1;
-        }
-
-        @keyframes scan {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100vh); }
-        }
-
         .terminal {
-            background: rgba(10, 20, 10, 0.95);
-            backdrop-filter: blur(3px);
+            background: rgba(10, 20, 10, 0.85);
+            backdrop-filter: blur(5px);
             border: 3px solid #00cc00;
             box-shadow: 0 0 30px #00cc00,
                         0 0 60px rgba(0, 255, 0, 0.3),
@@ -569,6 +574,74 @@
             display: inline-block;
         }
 
+        /* НОВОСТНАЯ СТРОКА С ЗАДЕРЖАНИЯМИ */
+        .news-ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 2px solid #ff0000;
+            border-bottom: 2px solid #ff0000;
+            padding: 10px 0;
+            z-index: 1000;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 -5px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 25s linear infinite;
+            color: #ff5555;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .ticker-content span {
+            margin-right: 50px;
+        }
+
+        .ticker-content .red {
+            color: #ff0000;
+            font-weight: bold;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        .ticker-content .blue {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ЭФФЕКТ ВСПЫШЕК КАМЕР */
+        .flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10000;
+            animation: cameraFlash 10s infinite;
+        }
+
+        @keyframes cameraFlash {
+            0%, 95%, 100% { opacity: 0; }
+            96% { opacity: 0.3; }
+            97% { opacity: 0; }
+            98% { opacity: 0.2; }
+            99% { opacity: 0; }
+        }
+
         @media (max-width: 600px) {
             .terminal {
                 padding: 25px 15px;
@@ -598,8 +671,40 @@
     </style>
 </head>
 <body>
+    <!-- ВИДЕО НА ФОНЕ - задержания киберпреступников -->
+    <video class="background-video" autoplay loop muted playsinline>
+        <source src="https://assets.mixkit.co/videos/40867/40867-720.mp4" type="video/mp4">
+        <!-- Запасной вариант если видео не загрузится -->
+        <source src="https://assets.mixkit.co/videos/29331/29331-720.mp4" type="video/mp4">
+    </video>
+    
+    <!-- ТЁМНАЯ ПЛЁНКА ПОВЕРХ ВИДЕО -->
+    <div class="overlay"></div>
+    
     <!-- МАТРИЧНЫЙ ДОЖДЬ -->
     <canvas id="matrix"></canvas>
+    
+    <!-- ЭФФЕКТ ВСПЫШЕК (как фото с задержаний) -->
+    <div class="flash"></div>
+    
+    <!-- НОВОСТНАЯ СТРОКА С ЗАДЕРЖАНИЯМИ -->
+    <div class="news-ticker">
+        <div class="ticker-content">
+            <span>🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡</span>
+            <span class="red">⚡ СРОЧНЫЕ НОВОСТИ: ФБР ЗАДЕРЖАЛО УЧАСТНИКОВ LOCKBIT ⚡</span>
+            <span>🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡</span>
+            <span class="blue">⚡ ЕВРОПОЛ ПРОВЁЛ ОПЕРАЦИЮ ПРОТИВ CONT1 ⚡</span>
+            <span>🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡</span>
+            <span class="red">⚡ КИБЕРПРЕСТУПНИКИ ЗАДЕРЖАНЫ В 15 СТРАНАХ ⚡</span>
+            <span>🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡</span>
+            <span class="blue">⚡ ВЕДЁТСЯ СЛЕДСТВИЕ: ИЗЪЯТО 500 ТЕРАБАЙТ ⚡</span>
+            <span>🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡</span>
+            <span class="red">⚡ ОБЫСКИ В ОСОБНЯКАХ ХАКЕРОВ ⚡</span>
+            <span>🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡</span>
+            <span class="blue">⚡ "ЭТО ТОЛЬКО НАЧАЛО" - ЗАЯВЛЕНИЕ МИНЮСТА ⚡</span>
+            <span>🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡🔴⚡</span>
+        </div>
+    </div>
 
     <!-- ЭКРАН ЗАГРУЗКИ -->
     <div id="loading-screen">
@@ -669,7 +774,7 @@
         </div>
     </div>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ (ПОЗДРАВЛЕНИЕ) -->
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div id="main-content">
         <div class="terminal">
             <div class="header">
@@ -788,7 +893,7 @@
             const filesList = document.getElementById('files-list');
             
             let progress = 0;
-            const totalTime = 4000; // 4 секунды
+            const totalTime = 4000;
             const interval = 50;
             const steps = totalTime / interval;
             const increment = 100 / steps;
@@ -896,14 +1001,12 @@
                 messageText = '➤ Выбрана группировка: CONT1 🔵 (синяя таблетка — свои люди)';
             }
             
-            // Плавно скрываем экран выбора
             choiceScreen.style.opacity = '0';
             
             setTimeout(() => {
                 choiceScreen.style.display = 'none';
                 mainContent.style.display = 'flex';
                 
-                // Обновляем текст в зависимости от выбора
                 chosenGroup.textContent = groupName;
                 chosenMessage.innerHTML = messageText;
                 
