@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONT1 • FEB 14</title>
+    <title>CONT1 • LOCKBIT • MATRIX</title>
     
     <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +22,18 @@
             background: #030303;
             min-height: 100vh;
             position: relative;
+        }
+
+        /* МАТРИЧНЫЙ ДОЖДЬ НА ФОНЕ */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            pointer-events: none;
         }
 
         /* ЭКРАН ЗАГРУЗКИ */
@@ -50,6 +62,8 @@
                         inset 0 0 30px rgba(0, 255, 0, 0.2);
             background: rgba(0, 20, 0, 0.9);
             border-radius: 10px;
+            position: relative;
+            z-index: 10000;
         }
 
         .conti-title {
@@ -85,7 +99,6 @@
             75% { text-shadow: 2px 2px 0 #ff00ff, -2px -2px 0 #00ffff; }
         }
 
-        /* ПРОГРЕСС БАР */
         .progress-container {
             width: 100%;
             height: 40px;
@@ -113,7 +126,6 @@
         }
 
         .progress-text {
-            font-family: 'Share Tech Mono', monospace;
             color: #00ff00;
             font-size: 1.2rem;
             margin-top: 15px;
@@ -156,22 +168,185 @@
             50% { opacity: 0; }
         }
 
-        /* ОСНОВНОЙ КОНТЕНТ (изначально скрыт) */
-        #main-content {
+        /* ЭКРАН ВЫБОРА (после загрузки) */
+        #choice-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #030303;
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease, visibility 1s ease;
+            transition: opacity 1s ease;
+        }
+
+        .choice-container {
+            text-align: center;
+            width: 90%;
+            max-width: 900px;
+            padding: 40px;
+            border: 3px solid #00ff00;
+            box-shadow: 0 0 70px #00ff00,
+                        0 0 140px rgba(0, 255, 0, 0.3),
+                        inset 0 0 50px rgba(0, 255, 0, 0.2);
+            background: rgba(0, 0, 0, 0.95);
+            border-radius: 20px;
+            position: relative;
+            z-index: 101;
+        }
+
+        .matrix-quote {
+            font-size: 2.5rem;
+            color: #00ff00;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: bold;
+            text-shadow: 0 0 30px #00ff00;
+            animation: matrixPulse 2s infinite;
+        }
+
+        @keyframes matrixPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .choice-sub {
+            color: #008800;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            border-bottom: 1px dashed #00ff00;
+            padding-bottom: 20px;
+        }
+
+        .pills-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            flex: 1;
+            min-width: 250px;
+            padding: 40px 20px;
+            border: 3px solid;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.5s;
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .pill::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: pillGlow 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pillGlow {
+            0% { transform: rotate(45deg) translateY(-100%); }
+            100% { transform: rotate(45deg) translateY(100%); }
+        }
+
+        .pill.lockbit {
+            border-color: #ff0000;
+            box-shadow: 0 0 50px #ff0000,
+                        0 0 100px rgba(255, 0, 0, 0.3);
+        }
+
+        .pill.conti {
+            border-color: #00ffff;
+            box-shadow: 0 0 50px #00ffff,
+                        0 0 100px rgba(0, 255, 255, 0.3);
+        }
+
+        .pill:hover {
+            transform: scale(1.05);
+        }
+
+        .pill.lockbit:hover {
+            background: rgba(255, 0, 0, 0.2);
+        }
+
+        .pill.conti:hover {
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        .pill-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .pill-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .pill.lockbit .pill-title {
+            color: #ff0000;
+            text-shadow: 0 0 20px #ff0000;
+        }
+
+        .pill.conti .pill-title {
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+        }
+
+        .pill-desc {
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .warning-text {
+            color: #ff00ff;
+            font-size: 1rem;
+            margin-top: 30px;
+            animation: blinkWarning 2s infinite;
+        }
+
+        @keyframes blinkWarning {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* СТРАНИЦА ПОЗДРАВЛЕНИЯ (после выбора) */
+        #main-content {
+            position: relative;
+            z-index: 50;
             min-height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
             background: #0a0f0f;
             background-image: 
                 linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
         body::before {
@@ -198,7 +373,7 @@
         }
 
         .terminal {
-            background: rgba(10, 20, 10, 0.92);
+            background: rgba(10, 20, 10, 0.95);
             backdrop-filter: blur(3px);
             border: 3px solid #00cc00;
             box-shadow: 0 0 30px #00cc00,
@@ -362,6 +537,7 @@
             gap: 20px;
             border-top: 1px dashed #008800;
             padding-top: 15px;
+            flex-wrap: wrap;
         }
 
         .status-item {
@@ -384,6 +560,15 @@
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
+        .chosen-one {
+            color: #ffff00;
+            background: rgba(255, 255, 0, 0.1);
+            border: 1px solid #ffff00;
+            padding: 5px 10px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
         @media (max-width: 600px) {
             .terminal {
                 padding: 25px 15px;
@@ -403,10 +588,19 @@
                 font-size: 2rem;
                 letter-spacing: 5px;
             }
+            .matrix-quote {
+                font-size: 1.8rem;
+            }
+            .pill-title {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- МАТРИЧНЫЙ ДОЖДЬ -->
+    <canvas id="matrix"></canvas>
+
     <!-- ЭКРАН ЗАГРУЗКИ -->
     <div id="loading-screen">
         <div class="loading-container">
@@ -439,45 +633,85 @@
         </div>
     </div>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <!-- ЭКРАН ВЫБОРА -->
+    <div id="choice-screen">
+        <div class="choice-container">
+            <div class="matrix-quote">ВЫБЕРИ СВОЮ СУДЬБУ</div>
+            <div class="choice-sub">└─► как в матрице, только для своих</div>
+            
+            <div class="pills-container">
+                <!-- LockBit Pill -->
+                <div class="pill lockbit" onclick="makeChoice('lockbit')">
+                    <div class="pill-icon">💊🔴</div>
+                    <div class="pill-title">LOCKBIT</div>
+                    <div class="pill-desc">
+                        Красная таблетка.<br>
+                        Жёстко, дерзко,<br>
+                        как ресома на полную.
+                    </div>
+                </div>
+                
+                <!-- Conti Pill -->
+                <div class="pill conti" onclick="makeChoice('conti')">
+                    <div class="pill-icon">💊🔵</div>
+                    <div class="pill-title">CONT1</div>
+                    <div class="pill-desc">
+                        Синяя таблетка.<br>
+                        Стильно, модно,<br>
+                        молодёжно — наши люди.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-text">
+                ⚡ Вне зависимости от выбора — ты всё равно мой лучший кент ⚡
+            </div>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ (ПОЗДРАВЛЕНИЕ) -->
     <div id="main-content">
         <div class="terminal">
             <div class="header">
-                <span>⚡ CONT1 SECURE TERMINAL v2.0 ⚡</span>
-                <span class="blink">▌ ENCRYPTION COMPLETE ▌</span>
+                <span id="chosen-group">⚡ CONT1 // LOCKBIT SECURE TERMINAL ⚡</span>
+                <span class="blink">▌ ACCESS: GRANTED ▌</span>
             </div>
 
             <div class="content">
                 <p>
-                    <span class="highlight">[14.02.2026 - 14:02]</span> ACCESS GRANTED...
+                    <span class="highlight" id="timestamp">[14.02.2026 - 14:02]</span> ACCESS GRANTED...
                 </p>
                 
                 <p>
-                    Слышь, брат. Твои файлы в безопасности, <br>
-                    хотя мог бы и зашифровать по-настоящему.
-                </p>
-                
-                <p>
-                    Но сегодня 14 февраля, поэтому просто хочу сказать:
+                    Слышь, брат. Ты выбрал свою таблетку,<br>
+                    а я выбрал тебя в свои кенты.
                 </p>
                 
                 <p>
                     <span class="highlight">>> SYSTEM MESSAGE:</span> <br>
-                    Если вдруг станет холодно — я рядом. <br>
-                    Если сервак упадёт — я подниму. <br>
-                    Если в жизни глитч — я отлажу. <br>
-                    Всегда поддержу, всегда помогу.
+                    Если вдруг станет холодно — я рядом.<br>
+                    Если сервак упадёт — я подниму.<br>
+                    Если в жизни глитч — я отлажу.<br>
+                    Всегда поддержу, всегда помогу.<br>
+                    Даже если весь мир будет против —<br>
+                    у тебя есть я и бэкдор в моём сердце.
                 </p>
                 
                 <p>
-                    С тобой даже код писать легче. <br>
-                    Ты мой самый любимый баг в системе, <br>
-                    который я не хочу фиксить.
+                    С тобой даже код писать легче.<br>
+                    Ты мой самый любимый баг в системе,<br>
+                    который я не хочу фиксить.<br>
+                    Потому что ты — не ошибка, ты — фича.<br>
+                    Самая охрененная фича в моей жизни.
                 </p>
                 
                 <p>
-                    <span class="highlight">>> EXECUTING: friendship.exe --permanent</span>
+                    <span class="highlight">>> EXECUTING: friendship.exe --permanent --force</span>
                 </p>
+                
+                <div id="chosen-message" class="chosen-one">
+                    ➤ Выбрана группировка: LOCKBIT // CONT1
+                </div>
             </div>
 
             <div class="signature">
@@ -488,37 +722,77 @@
             <div class="status-bar">
                 <div class="status-item">
                     <span class="dot"></span>
-                    <span>ENCRYPTION: BROKEN (FOR YOU)</span>
+                    <span>ENCRYPTION: BYPASSED (FOR YOU)</span>
                 </div>
                 <div class="status-item">
                     <span>⚡</span>
-                    <span>BACKDOOR: ❤️</span>
+                    <span>BACKDOOR: ❤️_❤️</span>
                 </div>
                 <div class="status-item">
                     <span>🛡️</span>
-                    <span>FIREWALL: DOWN</span>
+                    <span>FIREWALL: DOWN (BY CHOICE)</span>
+                </div>
+                <div class="status-item">
+                    <span>💊</span>
+                    <span id="choice-status">PILL: SELECTED</span>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // АХУЕННЫЙ СКРИПТ ЗАГРУЗКИ
+        // МАТРИЧНЫЙ ДОЖДЬ
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const matrixChars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+        const chars = matrixChars.split("");
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+
+        // ПРОГРЕСС ЗАГРУЗКИ
         window.onload = function() {
             const loadingScreen = document.getElementById('loading-screen');
-            const mainContent = document.getElementById('main-content');
+            const choiceScreen = document.getElementById('choice-screen');
             const progressBar = document.getElementById('progress-bar');
             const progressPercent = document.getElementById('progress-percent');
             const progressStatus = document.getElementById('progress-status');
             const filesList = document.getElementById('files-list');
             
             let progress = 0;
-            const totalTime = 5000; // 5 секунд
-            const interval = 50; // обновление каждые 50мс
+            const totalTime = 4000; // 4 секунды
+            const interval = 50;
             const steps = totalTime / interval;
             const increment = 100 / steps;
             
-            // Статусы для прикола
             const statuses = [
                 'BYPASSING ANTIVIRUS...',
                 'DECRYPTING MEMORIES...',
@@ -527,17 +801,17 @@
                 'DISABLING FIREWALL...',
                 'ENCRYPTING FEELINGS...',
                 'HACKING INTO YOUR SOUL...',
-                'OVERRIDING SECURITY...',
-                'EXECUTING VALENTINE.EXE...',
-                'ALMOST THERE...'
+                'LOADING MATRIX...',
+                'PREPARING CHOICE...'
             ];
             
-            // Добавляем новые файлы в процессе
             const moreFiles = [
                 'heart/love.exe [TARGET ACQUIRED]',
                 'memories/2025/bratan.png [PROCESSING]',
                 'system/friendship.sys [CORRUPTED - BY LOVE]',
-                'config/bestie.cfg [LOADING]'
+                'config/bestie.cfg [LOADING]',
+                'matrix/pill_red.dll [READY]',
+                'matrix/pill_blue.dll [READY]'
             ];
             
             let fileIndex = 0;
@@ -549,52 +823,101 @@
                     progress = 100;
                     clearInterval(timer);
                     
-                    // Загрузка завершена
-                    progressStatus.textContent = 'ACCESS GRANTED!';
+                    progressStatus.textContent = 'LOADING CHOICE MATRIX...';
                     
-                    // Прячем загрузку, показываем контент
                     setTimeout(function() {
                         loadingScreen.style.opacity = '0';
                         loadingScreen.style.visibility = 'hidden';
-                        mainContent.style.opacity = '1';
-                        mainContent.style.visibility = 'visible';
+                        choiceScreen.style.display = 'flex';
+                        setTimeout(() => {
+                            choiceScreen.style.opacity = '1';
+                        }, 50);
                     }, 500);
                 }
                 
-                // Обновляем прогресс
                 progressBar.style.width = progress + '%';
                 progressPercent.textContent = Math.floor(progress) + '%';
                 
-                // Меняем статус каждые ~10%
                 if (Math.floor(progress) % 10 === 0) {
                     const statusIndex = Math.floor(progress / 10) % statuses.length;
                     progressStatus.textContent = statuses[statusIndex];
                 }
                 
-                // Добавляем новые файлы в процессе
-                if (progress > 30 && fileIndex === 0) {
+                if (progress > 25 && fileIndex === 0) {
                     const newFile = document.createElement('div');
                     newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[0];
                     filesList.appendChild(newFile);
                     fileIndex++;
-                } else if (progress > 50 && fileIndex === 1) {
+                } else if (progress > 40 && fileIndex === 1) {
                     const newFile = document.createElement('div');
                     newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[1];
                     filesList.appendChild(newFile);
                     fileIndex++;
-                } else if (progress > 70 && fileIndex === 2) {
+                } else if (progress > 55 && fileIndex === 2) {
                     const newFile = document.createElement('div');
                     newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[2];
                     filesList.appendChild(newFile);
                     fileIndex++;
-                } else if (progress > 85 && fileIndex === 3) {
+                } else if (progress > 70 && fileIndex === 3) {
                     const newFile = document.createElement('div');
                     newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[3];
+                    filesList.appendChild(newFile);
+                    fileIndex++;
+                } else if (progress > 80 && fileIndex === 4) {
+                    const newFile = document.createElement('div');
+                    newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[4];
+                    filesList.appendChild(newFile);
+                    fileIndex++;
+                } else if (progress > 90 && fileIndex === 5) {
+                    const newFile = document.createElement('div');
+                    newFile.innerHTML = '<span class="status-dot"></span> ' + moreFiles[5];
                     filesList.appendChild(newFile);
                     fileIndex++;
                 }
             }, interval);
         };
+
+        // ФУНКЦИЯ ВЫБОРА
+        function makeChoice(choice) {
+            const choiceScreen = document.getElementById('choice-screen');
+            const mainContent = document.getElementById('main-content');
+            const chosenGroup = document.getElementById('chosen-group');
+            const chosenMessage = document.getElementById('chosen-message');
+            const choiceStatus = document.getElementById('choice-status');
+            
+            let groupName = '';
+            let messageText = '';
+            
+            if (choice === 'lockbit') {
+                groupName = '⚡ LOCKBIT SECURE TERMINAL ⚡';
+                messageText = '➤ Выбрана группировка: LOCKBIT 🔴 (красная таблетка — жёсткий путь)';
+            } else {
+                groupName = '⚡ CONT1 SECURE TERMINAL ⚡';
+                messageText = '➤ Выбрана группировка: CONT1 🔵 (синяя таблетка — свои люди)';
+            }
+            
+            // Плавно скрываем экран выбора
+            choiceScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                choiceScreen.style.display = 'none';
+                mainContent.style.display = 'flex';
+                
+                // Обновляем текст в зависимости от выбора
+                chosenGroup.textContent = groupName;
+                chosenMessage.innerHTML = messageText;
+                
+                if (choice === 'lockbit') {
+                    choiceStatus.innerHTML = 'PILL: 🔴 LOCKBIT';
+                } else {
+                    choiceStatus.innerHTML = 'PILL: 🔵 CONT1';
+                }
+                
+                setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                }, 50);
+            }, 1000);
+        }
     </script>
 </body>
 </html>
