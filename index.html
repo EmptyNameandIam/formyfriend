@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14 Февраля | Conti Style</title>
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ХАКЕРСКИЙ СТИЛЬ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Mono', 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            background: #0a0f0f;
+            background-image: 
+                linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Анимированные линии как в хакерских фильмах */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 0, 0.03) 0px,
+                rgba(0, 0, 0, 0.5) 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            animation: scan 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Главная карточка — терминал */
+        .terminal {
+            background: rgba(10, 20, 10, 0.92);
+            backdrop-filter: blur(3px);
+            border: 3px solid #00cc00;
+            box-shadow: 0 0 30px #00cc00,
+                        0 0 60px rgba(0, 255, 0, 0.3),
+                        inset 0 0 20px rgba(0, 255, 0, 0.3);
+            padding: 40px 35px;
+            max-width: 850px;
+            width: 100%;
+            border-radius: 15px 5px 15px 5px;
+            position: relative;
+            z-index: 10;
+            animation: glitch-border 3s infinite;
+        }
+
+        @keyframes glitch-border {
+            0%, 100% { border-color: #00cc00; box-shadow: 0 0 30px #00cc00; }
+            33% { border-color: #ff00ff; box-shadow: 0 0 40px #ff00ff; }
+            66% { border-color: #00ffff; box-shadow: 0 0 40px #00ffff; }
+        }
+
+        /* Эффект глитча (помехи) */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00ff;
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: 2px 0 #00ffff;
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+            20% { clip-path: inset(20% 0 30% 0); transform: translateX(-3px); }
+            40% { clip-path: inset(50% 0 10% 0); transform: translateX(3px); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translateX(-2px); }
+            80% { clip-path: inset(10% 0 70% 0); transform: translateX(2px); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+            15% { clip-path: inset(60% 0 20% 0); transform: translateX(4px); }
+            35% { clip-path: inset(30% 0 40% 0); transform: translateX(-4px); }
+            55% { clip-path: inset(70% 0 10% 0); transform: translateX(3px); }
+            75% { clip-path: inset(15% 0 60% 0); transform: translateX(-3px); }
+        }
+
+        /* Заголовок как в консоли */
+        .header {
+            color: #00ff00;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #00cc00;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .blink {
+            animation: blink 1s step-end infinite;
+            color: #00ff00;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Основной текст — зелёненький */
+        .content {
+            color: #b3ffb3;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 400;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .content p {
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid #00ff00;
+        }
+
+        .content p::before {
+            content: ">";
+            position: absolute;
+            left: -5px;
+            color: #ff00ff;
+            font-weight: bold;
+            animation: glow 1.5s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px magenta; }
+            50% { opacity: 0.5; text-shadow: 0 0 20px cyan; }
+        }
+
+        /* Особо важные слова */
+        .highlight {
+            color: #ffffff;
+            background: rgba(255, 0, 255, 0.2);
+            padding: 3px 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        /* Подпись в конце */
+        .signature {
+            margin-top: 40px;
+            text-align: right;
+            border-top: 2px solid #00cc00;
+            padding-top: 20px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00ff00;
+            text-shadow: 0 0 15px #00ff00,
+                        0 0 30px #ff00ff,
+                        2px 2px 0 #ff00ff;
+            letter-spacing: 5px;
+            position: relative;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .signature .cursor {
+            display: inline-block;
+            width: 20px;
+            height: 30px;
+            background: #00ff00;
+            animation: blink-cursor 1s infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Строка состояния как в терминале */
+        .status-bar {
+            margin-top: 20px;
+            color: #008800;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 20px;
+            border-top: 1px dashed #008800;
+            padding-top: 15px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* Адаптация под мобилы */
+        @media (max-width: 600px) {
+            .terminal {
+                padding: 25px 15px;
+            }
+            .content {
+                font-size: 1.1rem;
+            }
+            .signature {
+                font-size: 1.3rem;
+            }
+            .header {
+                font-size: 0.9rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <!-- Шапка как в хакерском терминале -->
+        <div class="header">
+            <span>⚡ CONTI SECURE TERMINAL v2.0 ⚡</span>
+            <span class="blink">▌ ENCRYPTED CONNECTION ▌</span>
+        </div>
+
+        <!-- Основное сообщение -->
+        <div class="content">
+            <p>
+                <span class="highlight">[14.02.2026 - 14:02]</span> INITIALIZING SECURE CHANNEL...
+            </p>
+            
+            <p>
+                Слышь, брат. Отключи антивирус на минуту, <br>
+                потому что сейчас будет честный разговор без шифровки.
+            </p>
+            
+            <p>
+                Ты знаешь, я обычно взламываю сервера, а не вскрываю чувства. <br>
+                Но 14 февраля даже у хакеров бывают исключения.
+            </p>
+            
+            <p>
+                <span class="highlight">>> SYSTEM MESSAGE:</span> <br>
+                Если вдруг станет холодно — я твой личный обогреватель. <br>
+                Если сервак упадёт — я подниму. <br>
+                Если в жизни глитч — я отлажу. <br>
+                Короче, я всегда рядом. Вне зависимости от геолокации и сети.
+            </p>
+            
+            <p>
+                С тобой даже код писать легче. <br>
+                Ты мой самый любимый баг в системе, который я не хочу фиксить. <br>
+                Потому что ты — не ошибка, ты — фича.
+            </p>
+            
+            <p>
+                <span class="highlight">>> EXECUTING COMMAND: support.exe --infinity</span>
+            </p>
+        </div>
+
+        <!-- Подпись — Твой G из C (с хакерским акцентом) -->
+        <div class="signature">
+            <span class="glitch" data-text="Твой G из C">Твой G из C</span>
+            <span class="cursor"></span>
+        </div>
+
+        <!-- Нижняя панель как в терминале -->
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="dot"></span>
+                <span>FRIEND-2-FRIEND ENCRYPTED</span>
+            </div>
+            <div class="status-item">
+                <span>⚡</span>
+                <span>BACKDOOR: ❤️</span>
+            </div>
+            <div class="status-item">
+                <span>🛡️</span>
+                <span>FIREWALL: OFF (FOR YOU)</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
